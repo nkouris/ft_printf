@@ -6,15 +6,37 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 15:08:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 15:27:18 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static void	store_pads(const char **format, t_flags *flags)
 {
-	if (ft_isdigit)
+	int	i;
+	int	num;
+
+	num = 0;
+	i = 0;
+	if (ft_isdigit && flags->fieldwidth < 0)
 	{
-		
+		while (ft_isdigit(**format))
+		{
+			num = *(*format)++ - '0';
+			i = (i * 10) + num;
+			flags->fieldwidth = i;
+		}
+	}
+	else if (**format == '.')
+	{
+		flags->preperiod = 1;
+		(*format)++;
+		while (ft_isdigit(**format))
+		{
+			num = *(*format)++ - '0';
+			i = (i * 10) + num;
+			flags->precision = i;
+		}
+	}
 }
 
 void	store_pre(const char **format, t_flags *flags)

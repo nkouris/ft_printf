@@ -6,11 +6,37 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 13:31:31 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 17:32:13 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void	c_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
+void	conv_s(const char **format, t_flags flags, va_list *args)
+{
+	int		strlen;
+	int 	pad;
+	char 	*str;
+	wchar_t *wstr;
+
+	pad = -1;
+	if (flags->lenmod[0] == 'l' || **format == 'S')
+	{
+		wstr = va_arg(*args, wchar_t *);
+		str = uchar_switch(wstr);
+	}
+	else
+		str = va_arg(*args, char *);
+	strlen = ft_strlen((const char)str);
+	if (flags->fieldwidth > 0 || flags->precision > 0)
+		pad = print_padding(flags, strlen);
+	write(1, &str, strlen);
+	if (pad > 0)
+	{
+		while (pad--)
+			write(1, " ", 1);
+	}
+}
+/*
+static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 {
 	int pad;
 
@@ -32,7 +58,7 @@ static void	c_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 	}
 }
 
-void	c_d_i(const char **format, t_flags *flags, va_list *args)
+void	conv_d_i(const char **format, t_flags *flags, va_list *args)
 {
 	char	str[64];
 	int		num;
@@ -52,7 +78,7 @@ void	c_d_i(const char **format, t_flags *flags, va_list *args)
 	c_d_i_u_owrite(flags, str, numlen, lnum);
 }
 
-void	c_o_u(const char **format, t_flags, *flags, va_list *args)
+void	conv_o_u(const char **format, t_flags, *flags, va_list *args)
 {
 	char		str[64];
 	unsigned int	num;
@@ -73,4 +99,4 @@ void	c_o_u(const char **format, t_flags, *flags, va_list *args)
 	if (**format == 'o' || **format == 'O')
 		numlen = base_conv(lnum, str, (long)8, numlen);
 	else
-
+} */

@@ -6,36 +6,11 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 14:33:52 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 17:32:39 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	push_modifiers(const char **format, char **pre)
-{
-	char	mods[3];
-	char	*new;
-	int		i;
-
-	i = 0;
-	ft_bzero((s_conversion *)mods);
-	while (i < 2)
-	{
-		if (**format == l || **format == h || **format == j || **format == z)
-			mods[i++] = *(*format)++;
-		else
-			break ;
-	}
-	if (i > 0)
-	{
-		*new = ft_strjoin((const char *)(*pre), (const char *)mods);
-		*pre = new;
-	}
-	if (!*pre)
-		return (-1);
-	return (1);
-}
 
 static int	check_conversions1(const char **format, s_conversion **print,
 			s_pflags *flags, va_list *args)
@@ -57,52 +32,27 @@ static int	check_conversions1(const char **format, s_conversion **print,
 	return (res);
 }
 
-static int	check_conversions0(const char **format, s_conversion **print,
-			s_pflags *flags, va_list *args)
+static void	parse_conv(const char **format, t_flags flags, va_list *args)
 {
-	int res;
-
 	if (**format == 's' || **format == 'S')
-		res = c_s(print, , args);
+		conv_s(format, flags, args);
+/*
 	else if (**format == 'p')
-		res = c_p(print, pre, args);
+		conv_p(format, flags, args);
 	else if (**format == 'd' || **format == 'D')
-		res = c_d(print, pre, args);
+		conv_d(format, flags, args);
 	else if (**format == 'i')
-		res = c_i(print, pre, args);
+		conv_i(format, flags, args);
 	else if (**format == 'o' || **format == 'O')
-		res = c_o(print, pre, args);
+		conv_o(format, flags, args);
 	else if (**format == 'u' || **format == 'U')
-		res = c_u(print, pre, args);
+		conv_u(format, flags, args);
 	else if (**format == 'x' || **format == 'X')
-		res = c_x(print, pre, args);
+		conv_x(format, flags, args);
 	else if (**format == 'c' || **format == 'C')
-		res = c_c(print, pre, args);
+		conv_c(format, flags, args);
 	else
-		res = check_conversions1(format, print, pre, args);
-	return (res);
-}
-
-static int	check_flags(const char **format, char **pre, s_pflags *flags)
-{
-	int		i;
-	char	*dpre;
-
-	i = 0;
-	while (!ft_isalpha(*format[i]))
-		i++;
-	if (!((*pre) = (char *)ft_memalloc(sizeof(char) * i)))
-		return (-1);
-	i = 0;
-	dpre = *pre;
-	while (!ft_isalpha(**format))
-		(*pre)[i++] = *(*format)++;
-	if (push_modifiers(format, pre) < 0
-		|| store_prepro0(pre, flags) < 0
-		|| !(*print = (s_conversion *)ft_memalloc(sizeof(s_conversion))))
-		return (-1);
-	ft_strdel(&dpre);
-	return (1);
+	*/
 }
 
 static void	clear_flags(t_flags *flags)
@@ -145,8 +95,15 @@ int		ft_printf(const char *format, ...)
 		i = 0;
 		naive_write(&format, &i);
 		write(1, naive, i);
+	/* Store current amount of chars written */
+		flags->n = i;
+	/* Move past % */
 		format++;
+	/* Store preproccess flags */
 		store_pre(&format, &flags);
+	/* Parse conversion and print */
+		parse_conv(&format, &flags, &args);
+	/* Move past conversion flag */
 		format++;
 	}
 	return(1);
