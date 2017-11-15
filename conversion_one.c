@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 14:20:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/15 15:13:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 {
 	int pad;
 
-	pad = 0;
 	if (lnum < 0 && flags->zpad)
 	{
 		write(1, "-", 1);
@@ -59,6 +58,11 @@ static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 	if (lnum < 0)
 	{
 		write(1, "-", 1);
+		flags->n++;
+	}
+	else if (flags->pospad)
+	{
+		write(1, "+", 1);
 		flags->n++;
 	}
 	write(1, str, numlen);
