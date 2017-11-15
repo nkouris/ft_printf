@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 23:41:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/15 14:20:19 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	conv_s(const char **format, t_flags *flags, va_list *args)
 	if (pad > 0)
 	{
 		while (pad--)
+		{
 			write(1, " ", 1);
+			flags->n++;
+		}
 	}
 }
 
@@ -54,8 +57,12 @@ static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 	}
 	pad = print_padding_num(flags, numlen);
 	if (lnum < 0)
+	{
 		write(1, "-", 1);
+		flags->n++;
+	}
 	write(1, str, numlen);
+	flags->n += numlen;
 	if (pad > 0)
 	{
 		flags->negwidth = 1;

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 23:59:45 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/15 14:43:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	store_pre(const char **format, t_flags *flags)
 	i = 0;
 	while (**format && !(ft_isalpha(**format)))
 	{
-	
+	/* Move past %, unless at end of string */
+		*(*format) == '%' ? (*format)++ : *format;
 		if (**format == '#' ? flags->altform = 1 : 0)
 			(*format)++;
 		if (**format == '0' ? flags->zpad = 1 : 0)

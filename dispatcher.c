@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 23:43:43 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/15 14:41:35 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ int		ft_printf(const char *format, ...)
 		write(1, naive, i);
 	/* Store current amount of chars written */
 		flags.n = i;
-	/* Move past % */
-		format++;
 	/* Store preproccess flags */
 		store_pre(&format, &flags);
 	/* Parse conversion and print */
@@ -107,5 +105,5 @@ int		ft_printf(const char *format, ...)
 		*format ? format++ : format;
 	}
 	va_end(args);
-	return(1);
+	return(flags.n);
 }

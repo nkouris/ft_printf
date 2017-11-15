@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:42:21 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 00:34:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/15 14:21:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int		print_padding(t_flags *flags, int *strlen)
 	if (!flags->negwidth && pad > 0)
 	{
 		while (pad--)
+		{
 			write(1, " ", 1);
+			flags->n++;
+		}
 	}
 	return (pad);
 }
@@ -54,7 +57,10 @@ int		print_padding_num(t_flags *flags, int relen)
 	if ((!flags->negwidth || prec > 0) && pad > 0)
 	{
 		while (pad--)
+		{
 			flags->zpad ? write(1, "0", 1) : write(1, " ", 1);
+			flags->n++;
+		}
 	}
 	return (pad);
 }
