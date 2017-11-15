@@ -6,15 +6,14 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 17:20:39 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 20:00:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
+
 char	*uchar_switch(wchar_t *wstr)
 {
-	char	str;
-
-	while (*wstr)
-		*str = (char)(*wstr);
-	return (str);
+	wstr = 0;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 18:18:40 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 23:43:43 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,22 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {
 	if (**format == 's' || **format == 'S')
 		conv_s(format, flags, args);
-}
-/*
 	else if (**format == 'p')
-		conv_p(format, flags, args);
-	else if (**format == 'd' || **format == 'D')
-		conv_d(format, flags, args);
-	else if (**format == 'i')
-		conv_i(format, flags, args);
-	else if (**format == 'o' || **format == 'O')
-		conv_o(format, flags, args);
-	else if (**format == 'u' || **format == 'U')
-		conv_u(format, flags, args);
+		conv_p(flags, args);
+	else if (**format == 'd' || **format == 'D'
+			|| **format == 'i')
+		conv_d_i(format, flags, args);
+	else if (**format == 'o' || **format == 'O'
+			|| **format == 'u' || **format =='U')
+		conv_o_u(format, flags, args);
 	else if (**format == 'x' || **format == 'X')
 		conv_x(format, flags, args);
+	/*
 	else if (**format == 'c' || **format == 'C')
 		conv_c(format, flags, args);
 	else
 	*/
+}
 
 static void	clear_flags(t_flags *flags)
 {
@@ -63,7 +61,6 @@ static void	clear_flags(t_flags *flags)
 	flags->negwidth = 0;
 	flags->spacepad = 0;
 	flags->pospad = 0;
-	flags->n = 0;
 	flags->fieldwidth = -1;
 	flags->precision = -1;
 	flags->lenmod[0] = 0;
@@ -89,6 +86,7 @@ int		ft_printf(const char *format, ...)
 	t_flags			flags;
 	int				i;
 
+	flags.n = 0;
 	va_start(args, format);
 	while (*format)
 	{
@@ -105,8 +103,9 @@ int		ft_printf(const char *format, ...)
 		store_pre(&format, &flags);
 	/* Parse conversion and print */
 		parse_conv(&format, &flags, &args);
-	/* Move past conversion flag */
-		format++;
+	/* Move past conversion flag, unless at end of string */
+		*format ? format++ : format;
 	}
+	va_end(args);
 	return(1);
 }

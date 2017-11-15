@@ -6,9 +6,26 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:31:41 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 13:39:49 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 22:25:04 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
+
+int		count_num_signed(long n, long base)
+{
+	int len;
+
+	len = 0;
+	if (n == 0)
+		return (1);
+	while (n)
+	{
+		n = n / base;
+		len++;
+	}
+	return (len);
+}
 
 int		count_num(unsigned long n, unsigned long base)
 {

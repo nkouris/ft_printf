@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 20:19:08 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 23:59:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ void	store_pre(const char **format, t_flags *flags)
 			|| **format == 'h'
 			|| **format == 'j'
 			|| **format == 'z') && i < 2)
-		flags->pre[i++] = *(*format++);
+		flags->lenmod[i++] = *(*format)++;
 	}
 }

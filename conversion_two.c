@@ -6,58 +6,71 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 13:48:01 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 22:30:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void	c_x_write(t_flags *flags, char *str, int clen, int numlen)
+#include "ft_printf.h"
+
+static void	conv_x_write(t_flags *flags, char *str, int relen, int numlen)
 {
-	int	pad;
+	int		pad;
 
 	if (flags->altform)
-		clen = clen + 2;
+		relen = relen + 2;
 	if (flags->zpad && flags->altform)
 		write(1, flags->pre, 2);
-	pad = print_padding_num(flags, clen);
+	pad = print_padding_num(flags, relen);
 	if (!flags->zpad && flags->altform)
 	{
 		write(1, flags->pre, 2);
-		clen = clen - 2;
+		relen = relen - 2;
 	}
-	write(1, &(str[numlen]), clen);
+	write(1, &(str[numlen]), relen);
 	if (pad > 0)
 	{
-		flags->neg_width = 1;
-		print_padding_num(flags, clen);
+		while (pad--)
+			write(1, " ", 1);
 	}
 }
-
+/*
 void	c_c(const char **format, t_flags *flags, va_list *args)
 {
 }
-
-void	c_x(const char **format, t_flags, va_list *args)
+*/
+void	conv_p(t_flags *flags, va_list *args)
 {
-	char	str[64];
+	char *pass;
+	char set;
+
+	if (flags->lenmod[0] == 'l')
+		set = 'X';
+	else
+		set = 'x';
+	pass = &set;
+	flags->altform = 1;
+	conv_x((const char **)&pass, flags, args);
+}
+
+void	conv_x(const char **format, t_flags *flags, va_list *args)
+{
+	char			str[64];
 	unsigned long	num;
-	int				clen;
+	int				relen;
 	int				numlen;
 
-	clen = 0;
+	relen = 0;
 	ft_memset(str, 0, 64);
 	num = va_arg(*args, unsigned long);
 	numlen = count_num(num, (unsigned long)10);
-	clen = base_conv(num, str, (unsinged long)16, numlen);
-	if (numlen > clen)
-		numlen = numlen - clen;
+	relen = base_conv(num, str, (unsigned long)16, numlen);
+	if (numlen > relen)
+		numlen = numlen - relen;
 	if (!num)
-		flags->alt_form = 0;
+		flags->altform = 0;
 	if (**format == 'X')
-	{
-		ft_toupper(&(str[numlen]));
 		flags->pre = "0X";
-	}
 	else
 		(flags->pre) = "0x";
-	c_x_write(flags, str, clen, numlen);
+	conv_x_write(flags, str, relen, numlen);
 }
