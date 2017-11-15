@@ -6,12 +6,13 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 17:32:39 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 18:18:40 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+/*
 static int	check_conversions1(const char **format, s_conversion **print,
 			s_pflags *flags, va_list *args)
 {
@@ -31,11 +32,12 @@ static int	check_conversions1(const char **format, s_conversion **print,
 		res = -1;
 	return (res);
 }
-
-static void	parse_conv(const char **format, t_flags flags, va_list *args)
+*/
+static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {
 	if (**format == 's' || **format == 'S')
 		conv_s(format, flags, args);
+}
 /*
 	else if (**format == 'p')
 		conv_p(format, flags, args);
@@ -53,7 +55,6 @@ static void	parse_conv(const char **format, t_flags flags, va_list *args)
 		conv_c(format, flags, args);
 	else
 	*/
-}
 
 static void	clear_flags(t_flags *flags)
 {
@@ -65,8 +66,9 @@ static void	clear_flags(t_flags *flags)
 	flags->n = 0;
 	flags->fieldwidth = -1;
 	flags->precision = -1;
-	flags->lenmod = "\0\0";
+	flags->lenmod[0] = 0;
 	flags->pre = 0;
+	flags->preperiod = 0;
 }
 
 static void	naive_write(const char **format, int *i)
@@ -76,14 +78,14 @@ static void	naive_write(const char **format, int *i)
 	{
 		(**format == '%' && (*(*format) + 1) == '%') ? (*format += 2) :
 			(*format)++;
-		(*i++);
+		(*i)++;
 	}
 }
 
 int		ft_printf(const char *format, ...)
 {
 	va_list 		args;
-	const char		naive;
+	const char		*naive;
 	t_flags			flags;
 	int				i;
 
@@ -96,7 +98,7 @@ int		ft_printf(const char *format, ...)
 		naive_write(&format, &i);
 		write(1, naive, i);
 	/* Store current amount of chars written */
-		flags->n = i;
+		flags.n = i;
 	/* Move past % */
 		format++;
 	/* Store preproccess flags */

@@ -6,29 +6,35 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 17:32:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 20:23:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	conv_s(const char **format, t_flags flags, va_list *args)
+#include "ft_printf.h"
+
+void	conv_s(const char **format, t_flags *flags, va_list *args)
 {
 	int		strlen;
 	int 	pad;
 	char 	*str;
-	wchar_t *wstr;
+//	wchar_t *wstr;
 
 	pad = -1;
+
 	if (flags->lenmod[0] == 'l' || **format == 'S')
 	{
+		;
+		/*
 		wstr = va_arg(*args, wchar_t *);
 		str = uchar_switch(wstr);
+		*/
 	}
 	else
 		str = va_arg(*args, char *);
-	strlen = ft_strlen((const char)str);
+	strlen = ft_strlen((const char *)str);
 	if (flags->fieldwidth > 0 || flags->precision > 0)
-		pad = print_padding(flags, strlen);
-	write(1, &str, strlen);
+		pad = print_padding(flags, &strlen);
+	write(1, str, strlen);
 	if (pad > 0)
 	{
 		while (pad--)

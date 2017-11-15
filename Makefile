@@ -1,34 +1,34 @@
 NAME = libftprintf.a
-FLAGS = -Wall -Werror -Wextra -c -I
+FLAGS = -Wall -Werror -Wextra
 CC = gcc
-LIBFT = inc/libft.a 
-OBJ = $(SRC: .c=.o)
+OBJ = $(patsubst %, %.o, $(SRC))
 
-SRC += dispatcher.c
-SRC += storeflags.c
-SRC += conversion_one.c
-SRC += conversion_two.c
-SRC += processflags.c
-SRC += ulitoabase.c
+SRC += dispatcher
+SRC += storeflags
+SRC += conversion_one
+SRC += printflags
+SRC += misc
+SRC += ft_bzero
+SRC += ft_isalpha
+SRC += ft_isdigit
+SRC += ft_memset
+SRC += ft_strlen
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(SRC)
+$(NAME): $(OBJ)
 	@ echo "Compiling with ft_printf..."
-	@ $(CC) $(FLAGS) $(LIBFT)
 	@ ar -rcs $(NAME) $(OBJ)
 
-$(LIBFT):
-	@ make -C inc
+%.o: %.c
+	@ echo "Compiling $<..."
+	@ $(CC) $(FLAGS) -c $< -o $@ -g
 
 clean:
-	@ echo "Cleaning folders..."
 	@ /bin/rm -f $(OBJ)
-	@ make -C inc clean
+	@ echo "Cleaning folders..."
 
 fclean: clean
-	@ echo "Removing lib file..."
-	@ make -C inc fclean
 
 re: fclean all
 	@ echo "Remake..."

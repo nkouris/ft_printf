@@ -6,9 +6,11 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 15:27:18 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 20:19:08 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 static void	store_pads(const char **format, t_flags *flags)
 {
@@ -17,7 +19,7 @@ static void	store_pads(const char **format, t_flags *flags)
 
 	num = 0;
 	i = 0;
-	if (ft_isdigit && flags->fieldwidth < 0)
+	if (ft_isdigit(**format) && flags->fieldwidth < 0)
 	{
 		while (ft_isdigit(**format))
 		{
@@ -44,13 +46,9 @@ void	store_pre(const char **format, t_flags *flags)
 	int	i;
 
 	i = 0;
-	while (**format)
+	while (**format && !(ft_isalpha(**format)))
 	{
-		if (**format == 'l'
-			|| **format == 'h'
-			|| **format == 'j'
-			|| **format == 'z')
-			flags->pre[i++] = **format++;
+	
 		if (**format == '#' ? flags->altform = 1 : 0)
 			(*format)++;
 		if (**format == '0' ? flags->zpad = 1 : 0)
@@ -62,7 +60,10 @@ void	store_pre(const char **format, t_flags *flags)
 		if (**format == '+' ? flags->pospad = 1 : 0)
 			(*format)++;
 		store_pads(format, flags);
-		if (i == 2)
-			break ;
+		while ((**format == 'l'
+			|| **format == 'h'
+			|| **format == 'j'
+			|| **format == 'z') && i < 2)
+		flags->pre[i++] = *(*format++);
 	}
 }

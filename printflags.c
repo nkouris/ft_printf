@@ -6,11 +6,13 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:42:21 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/14 17:29:00 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/14 18:23:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		print_padding(t_flags flags, int *strlen)
+#include "ft_printf.h"
+
+int		print_padding(t_flags *flags, int *strlen)
 {
 	int	pad;
 	int	width;
@@ -19,8 +21,8 @@ int		print_padding(t_flags flags, int *strlen)
 	pad = 0;
 	width = flags->fieldwidth;
 	prec = flags->precision;
-	if (*strlen > precision && precision > 0)
-		*strlen = precision;
+	if (*strlen > prec && prec > 0)
+		*strlen = prec;
 	if (*strlen > width && width > 0)
 		*strlen = width;
 	else
