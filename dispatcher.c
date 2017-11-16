@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 14:41:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/15 15:54:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ static int	check_conversions1(const char **format, s_conversion **print,
 */
 static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {
+	int	empty;
+
+	empty = 0;
 	if (**format == 's' || **format == 'S')
 		conv_s(format, flags, args);
 	else if (**format == 'p')
@@ -47,6 +50,8 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_o_u(format, flags, args);
 	else if (**format == 'x' || **format == 'X')
 		conv_x(format, flags, args);
+	else if (**format == '%')
+		conv_flag(flags);
 	/*
 	else if (**format == 'c' || **format == 'C')
 		conv_c(format, flags, args);
@@ -70,11 +75,9 @@ static void	clear_flags(t_flags *flags)
 
 static void	naive_write(const char **format, int *i)
 {
-	while ((**format != '%' && **format)
-			|| (**format == '%' && (*(*format) + 1) == '%'))
+	while (**format != '%' && **format)
 	{
-		(**format == '%' && (*(*format) + 1) == '%') ? (*format += 2) :
-			(*format)++;
+		(*format)++;
 		(*i)++;
 	}
 }

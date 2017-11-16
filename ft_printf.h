@@ -45,6 +45,7 @@ void	conv_o_u(const char **format, t_flags *flags, va_list *args);
 
 void	conv_p(t_flags *flags, va_list *args);
 void	conv_x(const char **format, t_flags *flags, va_list *args);
+void	conv_flag(t_flags *flags);
 
 /* Ulitobase */
 
