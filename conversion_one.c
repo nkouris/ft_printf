@@ -6,11 +6,26 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 15:13:27 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/16 18:56:07 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void	conv_s_null(t_flags *flags)
+{
+	int pad;
+	int empty;
+
+	empty = 0;
+	pad = print_padding(flags, &empty);
+	flags->n += write(1, "(null)", 6);
+	if (pad > 0)
+	{
+		while (pad--)
+			flags->n += write(1, " ", 1);
+	}
+}
 
 void	conv_s(const char **format, t_flags *flags, va_list *args)
 {
@@ -20,10 +35,9 @@ void	conv_s(const char **format, t_flags *flags, va_list *args)
 //	wchar_t *wstr;
 
 	pad = -1;
-
 	if (flags->lenmod[0] == 'l' || **format == 'S')
 	{
-		;
+		str = va_arg(*args, char *);
 		/*
 		wstr = va_arg(*args, wchar_t *);
 		str = uchar_switch(wstr);
@@ -31,16 +45,18 @@ void	conv_s(const char **format, t_flags *flags, va_list *args)
 	}
 	else
 		str = va_arg(*args, char *);
-	strlen = ft_strlen((const char *)str);
-	if (flags->fieldwidth > 0 || flags->precision > 0)
-		pad = print_padding(flags, &strlen);
-	write(1, str, strlen);
-	if (pad > 0)
+	if (!str)
+		conv_s_null(flags);
+	else
 	{
-		while (pad--)
+		strlen = ft_strlen((const char *)str);
+		if (flags->fieldwidth > 0 || flags->precision > 0)
+			pad = print_padding(flags, &strlen);
+		flags->n += write(1, str, strlen);
+		if (pad > 0)
 		{
-			write(1, " ", 1);
-			flags->n++;
+			while (pad--)
+				flags->n += write(1, " ", 1);
 		}
 	}
 }
@@ -50,27 +66,26 @@ static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 	int pad;
 
 	if (lnum < 0 && flags->zpad)
+		flags->n += write(1, "-", 1);
+	else if (flags->pospad && (flags->zpad || flags->precision > 0) && lnum > 0)
+		flags->n += write(1, "+", 1);
+	if ((lnum < 0) || (flags->pospad && lnum > 0))
 	{
-		write(1, "-", 1);
-		numlen += 1;
+		numlen++;
+		flags->printsign = 1;
 	}
 	pad = print_padding_num(flags, numlen);
-	if (lnum < 0)
-	{
-		write(1, "-", 1);
-		flags->n++;
-	}
-	else if (flags->pospad)
-	{
-		write(1, "+", 1);
-		flags->n++;
-	}
-	write(1, str, numlen);
-	flags->n += numlen;
+	if (lnum < 0 && !flags->zpad)
+		flags->n += write(1, "-", 1);
+	else if (flags->pospad && !flags->zpad && flags->precision < 0 && lnum > 0)
+		flags->n +=	write(1, "+", 1);
+	lnum < 0 || (flags->pospad && lnum > 0) ? numlen -= 1 : numlen;
+	flags->n += write(1, str, numlen);
 	if (pad > 0)
 	{
-		flags->negwidth = 1;
-		print_padding_num(flags, numlen);
+		while (pad--)
+			flags->zpad ? (flags->n += write(1, "0", 1)) :
+				(flags->n += write(1, " ", 1));
 	}
 }
 
@@ -98,7 +113,7 @@ void	conv_o_u(const char **format, t_flags *flags, va_list *args)
 {
 	char			str[64];
 	unsigned int	num;
-	int				relen;
+	int				numlen;
 	unsigned int	lnum;
 
 	ft_memset(str, 0, 64);
@@ -111,10 +126,12 @@ void	conv_o_u(const char **format, t_flags *flags, va_list *args)
 		num = va_arg(*args, unsigned int);
 		lnum = (unsigned long)num;
 	}
-	relen = count_num(lnum, (unsigned long)10);
+	numlen = count_num(lnum, (unsigned long)10);
 	if (**format == 'o' || **format == 'O')
-		relen = base_conv(lnum, str, (long)8, relen);
-	else
-		relen = base_conv(lnum, str, (long)10, relen);
-	conv_d_i_u_owrite(flags, str, relen, lnum);
+	{
+		flags->altform ? flags->precision = numlen + 1 : flags->precision;
+		flags->altform ? flags->preper = 1 : flags->preper;
+		numlen = base_conv(lnum, str, (long)8, numlen);
+	}
+	conv_d_i_u_owrite(flags, str, numlen, lnum);
 }

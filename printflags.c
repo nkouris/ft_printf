@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:42:21 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 15:50:06 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/16 18:51:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,37 +27,48 @@ int		print_padding(t_flags *flags, int *strlen)
 		*strlen = width;
 	else
 		pad = width - *strlen;
-	pad > 0 ? flags->n = flags->n + pad : flags->n;
 	if (!flags->negwidth && pad > 0)
 	{
 		while (pad--)
-			write(1, " ", 1);
+			flags->n += write(1, " ", 1);
 	}
 	return (pad);
 }
 
-int		print_padding_num(t_flags *flags, int relen)
+static void	print_prec_num(t_flags *flags, int p_pad)
+{
+	if (p_pad > 0)
+	{
+		while (p_pad--)
+			flags->n += write(1, "0", 1);
+	}
+}
+
+int		print_padding_num(t_flags *flags, int numlen)
 {
 	int pad;
 	int width;
 	int	prec;
+	int p_pad;
 
 	pad = 0;
+	p_pad = 0;
 	width = flags->fieldwidth;
 	prec = flags->precision;
-	if (relen < width)
-		pad = width - relen;
-	if (prec > width)
+	numlen < width ? pad = width - numlen : pad;
+	if (flags->printsign)
+		numlen--;
+	if (prec > 0 && prec > numlen)
 	{
-		flags->zpad = 1;
-		pad = prec - relen;
+		p_pad = prec - numlen;
+		pad = pad - p_pad;
 	}
-	flags->pospad ? pad-- : pad;
-	pad > 0 ? flags->n = flags->n + pad : flags->n;
-	if ((!flags->negwidth || prec > 0) && pad > 0)
+	if ((!flags->negwidth) && pad > 0)
 	{
 		while (pad--)
-			flags->zpad ? write(1, "0", 1) : write(1, " ", 1);
+			flags->zpad ? (flags->n += write(1, "0", 1)) :
+				(flags->n += write(1, " ", 1));
 	}
+	print_prec_num(flags, p_pad);
 	return (pad);
 }

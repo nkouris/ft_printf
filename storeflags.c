@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 16:13:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/16 11:00:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	store_pads(const char **format, t_flags *flags)
 	}
 	else if (**format == '.')
 	{
-		flags->preperiod = 1;
+		flags->preper = 1;
 		(*format)++;
 		while (ft_isdigit(**format))
 		{

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/15 15:54:23 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/16 18:52:05 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,8 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_x(format, flags, args);
 	else if (**format == '%')
 		conv_flag(flags);
-	/*
 	else if (**format == 'c' || **format == 'C')
-		conv_c(format, flags, args);
-	else
-	*/
+		conv_c(flags, args);
 }
 
 static void	clear_flags(t_flags *flags)
@@ -70,7 +67,8 @@ static void	clear_flags(t_flags *flags)
 	flags->precision = -1;
 	flags->lenmod[0] = 0;
 	flags->pre = 0;
-	flags->preperiod = 0;
+	flags->preper = 0;
+	flags->printsign = 0;
 }
 
 static void	naive_write(const char **format, int *i)
@@ -97,9 +95,8 @@ int		ft_printf(const char *format, ...)
 		naive = format;
 		i = 0;
 		naive_write(&format, &i);
-		write(1, naive, i);
-	/* Store current amount of chars written */
-		flags.n = i;
+	/* Store current amount of chars written and write */
+		flags.n += write(1, naive, i);
 	/* Store preproccess flags */
 		store_pre(&format, &flags);
 	/* Parse conversion and print */
