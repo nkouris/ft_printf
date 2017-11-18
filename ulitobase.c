@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:31:41 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/16 15:05:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/17 18:26:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,6 @@ int		base_conv(unsigned long n, char *address, unsigned long base, int len)
 /* baselen and len rework */
 	if (baselen != len)
 		len = baselen;
-/* baselen real
-	if (len < baselen)
-		len = baselen;
-		*/
 	if (!n)
 	{
 		address[0] = '0';

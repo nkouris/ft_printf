@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:42:21 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/17 15:42:34 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/17 18:28:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	print_prec_num(t_flags *flags, int p_pad, long lnum)
 {
 	if (lnum < 0)
 		flags->n += write(1, "-", 1);
-	else if (lnum > 0 && flags->sign)
+	else if (lnum >= 0 && flags->sign)
 		flags->n += write(1, "+", 1);
 	else if (lnum < 0 && flags->sign)
 		flags->n += write(1, "-", 1);
