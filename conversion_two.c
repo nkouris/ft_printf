@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/16 14:44:37 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/17 18:09:28 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,24 @@
 
 static void	conv_x_write(t_flags *flags, char *str, int relen, int numlen)
 {
-/* x_write rework */
 	int		pad;
 
 	relen = 0;
 	if (flags->altform)
-	{
 		numlen += 2;
-		flags->n += 2;
-	}	
 	if (flags->zpad && flags->altform)
-		write(1, flags->pre, 2);
-	pad = print_padding_num(flags, numlen);
+		flags->n += write(1, flags->pre, 2);
+	pad = print_padding_num(flags, numlen, 0);
 	if (!flags->zpad && flags->altform)
-		write(1, flags->pre, 2);
+		flags->n += write(1, flags->pre, 2);
 	flags->altform ? numlen -= 2 : numlen;
-	write(1, str, numlen);
-	flags->n += numlen;
+	flags->n += write(1, str, numlen);
 	flags->altform ? numlen += 2 : numlen;
 	if (pad > 0)
 	{
 		flags->negwidth = 0;
-		print_padding_num(flags, numlen);
+		print_padding_num(flags, numlen, 0);
 	}
-/* x_write original
-	int		pad;
-
-	if (flags->altform)
-	{
-		relen += 2;
-		flags->n += 2;
-	}	
-	if (flags->zpad && flags->altform)
-		write(1, flags->pre, 2);
-	pad = print_padding_num(flags, relen);
-	if (!flags->zpad && flags->altform)
-	{
-		write(1, flags->pre, 2);
-		relen = relen - 2;
-	}
-	write(1, &(str[numlen]), relen);
-	flags->n += relen;
-	if (pad > 0)
-	{
-		flags->negwidth = 0;
-		print_padding_num(flags, relen);
-	}
-*/
 }
 
 void	conv_c(t_flags *flags, va_list *args)
@@ -80,8 +51,7 @@ void	conv_c(t_flags *flags, va_list *args)
 	else
 		nchar = va_arg(*args, unsigned int);
 	pad = print_padding(flags, &single);
-	write(1, &nchar, 1);
-	flags->n++;
+	flags->n += write(1, &nchar, 1);
    if (pad > 0)
    {
 	   while (pad--)
@@ -114,15 +84,8 @@ void	conv_x(const char **format, t_flags *flags, va_list *args)
 	ft_memset(str, 0, 64);
 	(num = va_arg(*args, unsigned long)) >= HUINT && flags->lenmod[0] < 'j' ?
 		num = 0 : num;
-/* numlen relen relationship reworked */
 	numlen = count_num(num, (unsigned long)10);
 	numlen = base_conv(num, str, (unsigned long)16, numlen);
-/* orig
-	numlen = count_num(num, (unsigned long)10);
-	relen = base_conv(num, str, (unsigned long)16, numlen);
-	numlen > relen ? numlen -= relen : numlen;
-	numlen == relen ? numlen = 0 : numlen;
-*/
 	!num ? flags->altform = 0 : flags->altform;
 	if (**format == 'X')
 	{
@@ -131,7 +94,8 @@ void	conv_x(const char **format, t_flags *flags, va_list *args)
 	}
 	else
 		(flags->pre) = "0x";
-	flags->preper && num == 0 ? print_padding_num(flags, 0) :
+	flags->zpad = 0;
+	flags->preper && num == 0 ? print_padding_num(flags, 0, 0) :
 		conv_x_write(flags, str, relen, numlen);
 }
 
@@ -140,12 +104,11 @@ void	conv_flag(t_flags *flags)
 	int	pad;
 
 	pad = 0;
-	pad = print_padding_num(flags, 1);
-	write(1, "%", 1);
-	flags->n++;
+	pad = print_padding_num(flags, 1, 0);
+	flags->n += write(1, "%", 1);
 	if (pad > 0)
 	{
 		flags->negwidth = 0;
-		print_padding_num(flags, 1);
+		print_padding_num(flags, 1, 0);
 	}
 }

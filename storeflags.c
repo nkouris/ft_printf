@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/16 11:00:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/17 15:21:19 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	store_pads(const char **format, t_flags *flags)
 
 	num = 0;
 	i = 0;
-	if (ft_isdigit(**format) && flags->fieldwidth < 0)
+	if (ft_isdigit(**format) && flags->fieldwidth < 0 && **format != '0')
 	{
 		while (ft_isdigit(**format))
 		{
@@ -59,11 +59,11 @@ void	store_pre(const char **format, t_flags *flags)
 			(*format)++;
 		if (**format == '0' ? flags->zpad = 1 : 0)
 			(*format)++;
-		if(**format == '-' ? flags->negwidth = 1 : 0)
+		if (**format == '-' ? flags->negwidth = 1 : 0)
 			(*format)++;
 		if (**format == ' ' ? flags->spacepad = 1 : 0)
 			(*format)++;
-		if (**format == '+' ? flags->pospad = 1 : 0)
+		if (**format == '+' ? flags->sign = 1 : 0)
 			(*format)++;
 		store_pads(format, flags);
 		while ((**format == 'l' || **format == 'h'

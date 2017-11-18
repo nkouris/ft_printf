@@ -16,7 +16,7 @@ typedef struct		s_flags
 	unsigned int	negwidth : 1;
 	unsigned int	spacepad : 1;
 	unsigned int	preper : 1;
-	unsigned int	pospad : 1;
+	unsigned int	sign : 1;
 	unsigned int	printsign : 1;
 	int				fieldwidth;
 	int				precision;
@@ -37,7 +37,7 @@ void	store_pre(const char **format, t_flags *flags);
 /* Print Flags */
 
 int		print_padding(t_flags *flags, int *strlen);
-int		print_padding_num(t_flags *flags, int relen);
+int		print_padding_num(t_flags *flags, int relen, long lnum);
 
 /* Conversion Flags One */
 
