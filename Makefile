@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 CC = gcc
 OBJ = $(patsubst %, %.o, $(SRC))
 

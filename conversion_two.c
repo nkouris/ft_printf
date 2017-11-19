@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/17 18:15:40 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/19 14:34:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	conv_x(const char **format, t_flags *flags, va_list *args)
 	ft_memset(str, 0, 64);
 	(num = va_arg(*args, unsigned long)) >= HUINT && flags->lenmod[0] < 'j' ?
 		num = 0 : num;
-	numlen = count_num(num, (unsigned long)10);
-	numlen = base_conv(num, str, (unsigned long)16, numlen);
+	numlen = count_num(num, 10);
+	numlen = base_conv(num, str, 16, numlen);
 	!num ? flags->altform = 0 : flags->altform;
 	if (**format == 'X')
 	{
@@ -94,7 +94,8 @@ void	conv_x(const char **format, t_flags *flags, va_list *args)
 	}
 	else
 		(flags->pre) = "0x";
-	flags->zpad = 0;
+	flags->preper ? flags->zpad = 0 : flags->zpad;
+	flags->negwidth ? flags->zpad = 0 : flags->zpad;
 	flags->preper && num == 0 ? print_padding_num(flags, 0, 0) :
 		conv_x_write(flags, str, relen, numlen);
 }

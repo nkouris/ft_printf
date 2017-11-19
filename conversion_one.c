@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/18 17:02:16 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/19 14:46:31 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ void	conv_d_i(const char **format, t_flags *flags, va_list *args)
 		lnum = (long)(char)num;
 	else if (flags->lenmod[0] == 'h' && flags->lenmod[1] != 'h')
 		lnum = (long)(short)num;
-	relen = count_num_signed(lnum, (long)10);
-	base_conv_signed(lnum, str, (long)10, relen);
+	relen = count_num_signed(lnum, 10);
+	base_conv_signed(lnum, str, 10, relen);
+	if (flags->spacepad && flags->fieldwidth < relen)
+		flags->fieldwidth = relen + 1;
 	if (flags->preper && !lnum)
 		relen--;
 	conv_d_i_u_owrite(flags, str, relen, lnum);
@@ -129,18 +131,9 @@ void	conv_u(const char **format, t_flags *flags, va_list *args)
 		num = va_arg(*args, unsigned int);
 		lnum = (unsigned long)num;
 	}
-	numlen = count_num(lnum, (unsigned long)10);
-	/*
-	if (**format == 'o' || **format == 'O')
-	{
-		flags->altform ? flags->precision = numlen + 1 : flags->precision;
-		flags->altform ? flags->preper = 1 : flags->preper;
-		numlen = base_conv(lnum, str, (long)8, numlen);
-	}
-	if (!flags->preper && !lnum)
-		numlen--;
-	else */
-	numlen = base_conv(lnum, str, (long)10, numlen);
+	numlen = count_num(lnum, 10);
+	numlen = base_conv(lnum, str, 10, numlen);
+	flags->sign = 0;
 	conv_d_i_u_owrite(flags, str, numlen, 0);
 }
 

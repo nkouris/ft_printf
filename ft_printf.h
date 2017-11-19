@@ -8,6 +8,7 @@
 
 #define BASE_FLAGS "0123456789abcdef"
 #define HUINT 4294967296
+#define MINLONG_SAFE 9223372036854775808U
 
 typedef struct		s_flags
 {
