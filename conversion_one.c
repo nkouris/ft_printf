@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/17 18:57:49 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/18 17:02:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,25 @@ void	conv_d_i(const char **format, t_flags *flags, va_list *args)
 	long	lnum;
 
 	ft_memset(str, 0, 64);
-	if (flags->lenmod[0] == 'l' || **format == 'D' || flags->lenmod[0] == 'j')
+	if (flags->lenmod[0] >= 106 || **format == 'D')
 		lnum = va_arg(*args, long);
 	else
 	{	
 		num = va_arg(*args, int);
 		lnum = (long)num;
 	}
-	if (flags->lenmod[0] == 'h' && flags->lenmod[0] == 'h')
+	if (flags->lenmod[0] == 'h' && flags->lenmod[1] == 'h')
 		lnum = (long)(char)num;
 	else if (flags->lenmod[0] == 'h' && flags->lenmod[1] != 'h')
 		lnum = (long)(short)num;
 	relen = count_num_signed(lnum, (long)10);
 	base_conv_signed(lnum, str, (long)10, relen);
+	if (flags->preper && !lnum)
+		relen--;
 	conv_d_i_u_owrite(flags, str, relen, lnum);
 }
 
-void	conv_o_u(const char **format, t_flags *flags, va_list *args)
+void	conv_u(const char **format, t_flags *flags, va_list *args)
 {
 	char			str[64];
 	unsigned int	num;
@@ -116,7 +118,7 @@ void	conv_o_u(const char **format, t_flags *flags, va_list *args)
  * explicit typecast of va_arg does not work explicitly, so, wrap to let
  * compiler do the work 
  */
-	if (flags->lenmod[0] == 'l' || **format == 'U' || **format == 'O')
+	if (flags->lenmod[0] >= 106 || **format == 'U' || **format == 'O')
 	{
 		lnum = va_arg(*args, unsigned long);
 		if (lnum < 4294967295)
@@ -128,13 +130,53 @@ void	conv_o_u(const char **format, t_flags *flags, va_list *args)
 		lnum = (unsigned long)num;
 	}
 	numlen = count_num(lnum, (unsigned long)10);
+	/*
 	if (**format == 'o' || **format == 'O')
 	{
 		flags->altform ? flags->precision = numlen + 1 : flags->precision;
 		flags->altform ? flags->preper = 1 : flags->preper;
 		numlen = base_conv(lnum, str, (long)8, numlen);
 	}
-	else
-		numlen = base_conv(lnum, str, (long)10, numlen);
+	if (!flags->preper && !lnum)
+		numlen--;
+	else */
+	numlen = base_conv(lnum, str, (long)10, numlen);
 	conv_d_i_u_owrite(flags, str, numlen, 0);
+}
+
+void	conv_o(const char **format, t_flags *flags, va_list *args)
+{
+	char			str[64];
+	unsigned int	num;
+	int				numlen;
+	unsigned long	lnum;
+
+	ft_memset(str, 0, 64);
+/* 
+ * explicit typecast of va_arg does not work explicitly, so, wrap to let
+ * compiler do the work 
+ */
+	if (flags->lenmod[0] >= 106 || **format == 'O')
+	{
+		lnum = va_arg(*args, unsigned long);
+		if (lnum < 4294967295)
+			lnum = (unsigned long)(int)lnum;
+	}
+	else
+	{
+		num = va_arg(*args, unsigned int);
+		lnum = (unsigned long)num;
+	}
+	numlen = count_num(lnum, (unsigned long)10);
+	if (flags->altform)
+	{
+		lnum ? flags->precision = numlen + 1 :
+			(flags->precision = 1);
+		flags->preper = 1;
+	}
+	numlen = base_conv(lnum, str, (long)8, numlen);
+	if (flags->preper && !lnum)
+		numlen--;
+	conv_d_i_u_owrite(flags, str, numlen, 0);
+
 }

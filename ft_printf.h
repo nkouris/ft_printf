@@ -43,7 +43,8 @@ int		print_padding_num(t_flags *flags, int relen, long lnum);
 
 void	conv_s(const char **format, t_flags *flags, va_list *args);
 void	conv_d_i(const char **format, t_flags *flags, va_list *args);
-void	conv_o_u(const char **format, t_flags *flags, va_list *args);
+void	conv_u(const char **format, t_flags *flags, va_list *args);
+void	conv_o(const char **format, t_flags *flags, va_list *args);
 
 /* Conversion Flags Two */
 
