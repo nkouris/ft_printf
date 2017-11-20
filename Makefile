@@ -1,34 +1,36 @@
 NAME = libftprintf.a
 FLAGS = -Wall -Werror -Wextra -g
 CC = gcc
-OBJ = $(patsubst %, %.o, $(SRC))
+OBJSRC = $(patsubst %, %.o, $(SRC))
+OBJINC = $(patsubst %, %.o, $(INC))
 
-SRC += dispatcher
-SRC += storeflags
-SRC += conversion_diou
-SRC += conversion_sc
-SRC += conversion_xp
-SRC += printflags
-SRC += misc
-SRC += ulitobase
-SRC += ft_bzero
-SRC += ft_isalpha
-SRC += ft_isdigit
-SRC += ft_memset
-SRC += ft_strlen
+SRC += src/dispatcher
+SRC += src/storeflags
+SRC += src/conversion_diou
+SRC += src/conversion_sc
+SRC += src/conversion_xp
+SRC += src/printflags
+SRC += src/misc
+SRC += src/ulitobase
+INC += inc/ft_bzero
+INC += inc/ft_isalpha
+INC += inc/ft_isdigit
+INC += inc/ft_memset
+INC += inc/ft_strlen
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJINC) $(OBJSRC)
 	@ echo "Compiling ft_printf library..."
-	@ ar -rcs $(NAME) $(OBJ)
+	@ ar -rcs $(NAME) $(OBJSRC) $(OBJINC)
 
 %.o: %.c
 	@ echo "Compiling $<..."
-	@ $(CC) $(FLAGS) -c $< -o $@ -g
+	@ $(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	@ /bin/rm -f $(OBJ)
+	@ /bin/rm -f $(OBJSRC)
+	@ /bin/rm -f $(OBJINC)
 	@ echo "Cleaning folders..."
 
 fclean: clean
