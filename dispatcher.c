@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/18 16:51:59 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/19 15:49:42 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	check_conversions1(const char **format, s_conversion **print,
 	return (res);
 }
 */
+
 static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {
 	int	empty;
@@ -47,7 +48,7 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_d_i(format, flags, args);
 	else if (**format == 'o' || **format == 'O')
 		conv_o(format, flags, args);
-	else if (**format == 'u' || **format =='U')
+	else if (**format == 'u' || **format == 'U')
 		conv_u(format, flags, args);
 	else if (**format == 'x' || **format == 'X')
 		conv_x(format, flags, args);
@@ -63,13 +64,13 @@ static void	clear_flags(t_flags *flags)
 	flags->zpad = 0;
 	flags->negwidth = 0;
 	flags->spacepad = 0;
+	flags->preper = 0;
 	flags->sign = 0;
+	flags->printsign = 0;
 	flags->fieldwidth = -1;
 	flags->precision = -1;
 	flags->lenmod[0] = 0;
 	flags->pre = 0;
-	flags->preper = 0;
-	flags->printsign = 0;
 }
 
 static void	naive_write(const char **format, int *i)
@@ -81,9 +82,16 @@ static void	naive_write(const char **format, int *i)
 	}
 }
 
-int		ft_printf(const char *format, ...)
+/*
+** Store current amount of chars written and write
+** Store preproccess flags
+** Parse conversion and print
+** Move past conversion flag, unless at end of string
+*/
+
+int			ft_printf(const char *format, ...)
 {
-	va_list 		args;
+	va_list			args;
 	const char		*naive;
 	t_flags			flags;
 	int				i;
@@ -96,15 +104,11 @@ int		ft_printf(const char *format, ...)
 		naive = format;
 		i = 0;
 		naive_write(&format, &i);
-	/* Store current amount of chars written and write */
 		flags.n += write(1, naive, i);
-	/* Store preproccess flags */
 		store_pre(&format, &flags);
-	/* Parse conversion and print */
 		parse_conv(&format, &flags, &args);
-	/* Move past conversion flag, unless at end of string */
 		*format ? format++ : format;
 	}
 	va_end(args);
-	return(flags.n);
+	return (flags.n);
 }

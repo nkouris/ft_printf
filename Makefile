@@ -5,8 +5,9 @@ OBJ = $(patsubst %, %.o, $(SRC))
 
 SRC += dispatcher
 SRC += storeflags
-SRC += conversion_one
-SRC += conversion_two
+SRC += conversion_diou
+SRC += conversion_sc
+SRC += conversion_xp
 SRC += printflags
 SRC += misc
 SRC += ulitobase
@@ -19,7 +20,7 @@ SRC += ft_strlen
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ echo "Compiling with ft_printf..."
+	@ echo "Compiling ft_printf library..."
 	@ ar -rcs $(NAME) $(OBJ)
 
 %.o: %.c
@@ -31,6 +32,7 @@ clean:
 	@ echo "Cleaning folders..."
 
 fclean: clean
+	@ /bin/rm -f $(NAME)
 
 re: fclean all
-	@ echo "Remake..."
+	@ echo "Library Remade"

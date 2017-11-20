@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/17 15:21:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/19 16:07:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	store_pads(const char **format, t_flags *flags)
 	}
 }
 
-void	store_pre(const char **format, t_flags *flags)
+void		store_pre(const char **format, t_flags *flags)
 {
 	int	i;
 	int	j;
@@ -50,7 +50,6 @@ void	store_pre(const char **format, t_flags *flags)
 	j = 0;
 	while (**format && !(ft_isalpha(**format)) && j < 2)
 	{
-	/* Move past %, unless at end of string */
 		if (*(*format) == '%' && j < 1)
 			(*format)++ ? j++ : j;
 		else if (**format == '%')
@@ -68,6 +67,6 @@ void	store_pre(const char **format, t_flags *flags)
 		store_pads(format, flags);
 		while ((**format == 'l' || **format == 'h'
 				|| **format == 'j' || **format == 'z') && i < 2)
-		flags->lenmod[i++] = *(*format)++;
+			flags->lenmod[i++] = *(*format)++;
 	}
 }
