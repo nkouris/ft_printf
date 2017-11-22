@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/19 15:46:09 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/21 15:50:54 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct		s_flags
 	int				n;
 	char			lenmod[2];
 	char			*pre;
+	char			*str;
+	int				strx;
+	int				strinst;
 }					t_flags;
 
 /*
@@ -73,6 +76,7 @@ void				conv_o(const char **format, t_flags *flags, va_list *args);
 void				conv_s(const char **format, t_flags *flags, va_list *args);
 void				conv_c(t_flags *flags, va_list *args);
 void				conv_flag(t_flags *flags);
+void				conv_n(t_flags *flags, va_list *args);
 
 /*
 ** Conversion Flags xp
@@ -96,6 +100,8 @@ int					base_conv(unsigned long n, char *address,
 ** Misc
 */
 
+int					buf_store(t_flags *flags, int n, const char *store,
+								unsigned char pad);
 char				*uchar_switch(wchar_t *wstr);
 void				upper(char *str);
 

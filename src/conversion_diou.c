@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/19 16:28:26 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/21 12:46:12 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,9 @@ static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 	}
 	pad = print_padding_num(flags, numlen, lnum);
 	((lnum < 0) || (flags->sign && lnum != 0)) ? numlen -= 1 : numlen;
-	flags->n += write(1, str, numlen);
+	flags->n += buf_store(flags, numlen, (const char *)str, 0);
 	if (pad > 0)
-	{
-		while (pad--)
-			flags->n += write(1, " ", 1);
-	}
+		flags->n += buf_store(flags, pad, 0, ' ');
 }
 
 void		conv_d_i(const char **format, t_flags *flags, va_list *args)

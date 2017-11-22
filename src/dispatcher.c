@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/19 15:49:42 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/21 15:58:46 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static int	check_conversions1(const char **format, s_conversion **print,
 		res = c_f(print, pre, args);
 	else if (**format == 'a' || **format == 'A')
 		res = c_a(print, pre, args);
-	else if (**format == 'n')
-		res = c_n(print, pre, args);
 	else if (**format == 'e' || **format == 'E')
 		res = c_e(print, pre, args);
 	else
@@ -56,6 +54,8 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_flag(flags);
 	else if (**format == 'c' || **format == 'C')
 		conv_c(flags, args);
+	else if (**format == 'n')
+		conv_n(flags, args);
 }
 
 static void	clear_flags(t_flags *flags)
@@ -71,6 +71,8 @@ static void	clear_flags(t_flags *flags)
 	flags->precision = -1;
 	flags->lenmod[0] = 0;
 	flags->pre = 0;
+	flags->strx = 0;
+	flags->strinst = 0;
 }
 
 static void	naive_write(const char **format, int *i)
@@ -100,14 +102,19 @@ int			ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (*format)
 	{
+		if (!(flags.str = ft_memalloc(512)))
+			exit(-1);
 		clear_flags(&flags);
 		naive = format;
 		i = 0;
 		naive_write(&format, &i);
-		flags.n += write(1, naive, i);
+		if (i)
+			flags.n += buf_store(&flags, i, naive, 0);
 		store_pre(&format, &flags);
 		parse_conv(&format, &flags, &args);
 		*format ? format++ : format;
+		write(1, flags.str, (flags.strx * (flags.strinst + 1)));
+		ft_memdel((void **)(&(flags.str)));
 	}
 	va_end(args);
 	return (flags.n);

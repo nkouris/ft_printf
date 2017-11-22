@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra 
 CC = gcc
 OBJSRC = $(patsubst %, %.o, $(SRC))
 OBJINC = $(patsubst %, %.o, $(INC))
@@ -17,12 +17,14 @@ INC += inc/ft_isalpha
 INC += inc/ft_isdigit
 INC += inc/ft_memset
 INC += inc/ft_strlen
+INC += inc/ft_memalloc
+INC += inc/ft_memdel
 
 all: $(NAME)
 
 $(NAME): $(OBJINC) $(OBJSRC)
 	@ echo "Compiling ft_printf library..."
-	@ ar -rcs $(NAME) $(OBJSRC) $(OBJINC)
+	@ ar -rcs $(NAME) $(OBJSRC) $(OBJINC) 
 
 %.o: %.c
 	@ echo "Compiling $<..."
