@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 13:33:00 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 14:59:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ void		conv_flag(t_flags *flags)
 	int pad;
 
 	pad = 0;
+	flags->preper = 0;
+	flags->precision = 0;
+	flags->zpad && flags->negwidth ? flags->zpad = 0 : flags->zpad;
 	pad = print_padding_num(flags, 1, 0);
 	flags->n += buf_store(flags, 1, 0, '%');
 	if (pad > 0)
