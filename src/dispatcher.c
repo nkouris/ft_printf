@@ -6,31 +6,11 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 15:58:46 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/21 18:03:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*
-static int	check_conversions1(const char **format, s_conversion **print,
-			s_pflags *flags, va_list *args)
-{
-	int res;
-
-	if (**format == 'g' || **format == 'G')
-		res = c_g(print, pre, args);
-	else if (**format == 'f' || **format == 'F')
-		res = c_f(print, pre, args);
-	else if (**format == 'a' || **format == 'A')
-		res = c_a(print, pre, args);
-	else if (**format == 'e' || **format == 'E')
-		res = c_e(print, pre, args);
-	else
-		res = -1;
-	return (res);
-}
-*/
 
 static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {

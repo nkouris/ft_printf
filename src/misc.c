@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 15:15:47 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/21 18:04:44 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,12 @@ void		upper(char *str)
 			*str -= 32;
 		str++;
 	}
+}
+
+void		conv_n(t_flags *flags, va_list *args)
+{
+	unsigned int *storage;
+
+	storage = va_arg(*args, unsigned int *);
+	*storage = flags->n;
 }

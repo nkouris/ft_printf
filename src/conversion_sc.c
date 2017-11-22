@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 15:50:56 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/21 18:05:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,48 @@ static void	conv_s_null(t_flags *flags)
 		flags->n += buf_store(flags, pad, 0, ' ');
 }
 
+static void	conv_ws(t_flags *flags, wchar_t *str)
+{
+	int				i;
+	int				j;
+	int				pad;
+	unsigned char	*ustr;
+
+	i = 0;
+	pad = 0;
+	while (str[i])
+		i++;
+	ustr = (unsigned char *)ft_memalloc((unsigned int)i);
+	j = 0;
+	while (j > i)
+	{
+		if (*str <= 255)
+			ustr[j++] = (unsigned char)(*str++);
+	}
+	if (flags->fieldwidth > 0 || flags->precision > 0)
+		pad = print_padding(flags, &i);
+	flags->n += write(1, ustr, i);
+	if (pad > 0)
+		flags->n += buf_store(flags, pad, 0, ' ');
+}
+
 void		conv_s(const char **format, t_flags *flags, va_list *args)
 {
-	int		strlen;
-	int		pad;
-	char	*str;
+	int				strlen;
+	int				pad;
+	char			*str;
+	wchar_t			*wstr;
 
 	pad = -1;
+	wstr = 0;
+	str = 0;
 	if (flags->lenmod[0] == 'l' || **format == 'S')
-		str = va_arg(*args, char *);
+		wstr = va_arg(*args, wchar_t *);
 	else
 		str = va_arg(*args, char *);
-	if (!str)
+	if (!str && !wstr)
 		conv_s_null(flags);
-	else
+	else if (str)
 	{
 		strlen = ft_strlen((const char *)str);
 		if (flags->fieldwidth > 0 || flags->precision > 0)
@@ -46,6 +74,8 @@ void		conv_s(const char **format, t_flags *flags, va_list *args)
 		if (pad > 0)
 			flags->n += buf_store(flags, pad, 0, ' ');
 	}
+	else
+		conv_ws(flags, wstr);
 }
 
 void		conv_c(t_flags *flags, va_list *args)
@@ -87,12 +117,4 @@ void		conv_flag(t_flags *flags)
 		flags->negwidth = 0;
 		print_padding_num(flags, 1, 0);
 	}
-}
-
-void		conv_n(t_flags *flags, va_list *args)
-{
-	unsigned int *storage;
-
-	storage = va_arg(*args, unsigned int *);
-	*storage = flags->n;
 }
