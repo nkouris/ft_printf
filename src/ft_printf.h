@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 18:05:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 13:25:38 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_flags
 	unsigned int	preper : 1;
 	unsigned int	sign : 1;
 	unsigned int	printsign : 1;
+	unsigned int	ptox : 1;
 	int				fieldwidth;
 	int				precision;
 	int				n;

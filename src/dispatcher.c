@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 18:03:23 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 13:26:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	clear_flags(t_flags *flags)
 	flags->preper = 0;
 	flags->sign = 0;
 	flags->printsign = 0;
+	flags->ptox = 0;
 	flags->fieldwidth = -1;
 	flags->precision = -1;
 	flags->lenmod[0] = 0;

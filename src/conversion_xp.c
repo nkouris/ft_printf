@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 12:40:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 13:33:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,10 @@ void		conv_p(t_flags *flags, va_list *args)
 	char *pass;
 	char set;
 
-	if (flags->lenmod[0] == 'l')
-		set = 'X';
-	else
-	{
-		flags->lenmod[0] = 'l';
-		set = 'x';
-	}
+	flags->lenmod[0] = 'l';
+	set = 'x';
 	pass = &set;
+	flags->ptox = 1;
 	flags->altform = 1;
 	conv_x((const char **)&pass, flags, args);
 }
@@ -64,7 +60,7 @@ void		conv_x(const char **format, t_flags *flags, va_list *args)
 	(num >= HUINT && flags->lenmod[0] < 106) ? (num = 0) : (num);
 	numlen = count_num(num, 10);
 	numlen = base_conv(num, str, 16, numlen);
-	!num ? flags->altform = 0 : flags->altform;
+	!num && !flags->ptox ? flags->altform = 0 : flags->altform;
 	if (**format == 'X')
 	{
 		flags->pre = "0X";
@@ -72,8 +68,7 @@ void		conv_x(const char **format, t_flags *flags, va_list *args)
 	}
 	else
 		(flags->pre) = "0x";
-	flags->preper ? flags->zpad = 0 : flags->zpad;
-	flags->negwidth ? flags->zpad = 0 : flags->zpad;
+	flags->preper || flags->negwidth ? flags->zpad = 0 : flags->zpad;
 	flags->preper && num == 0 ? print_padding_num(flags, 0, 0) :
 		conv_x_write(flags, str, relen, numlen);
 }

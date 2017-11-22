@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 12:46:12 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 13:47:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		conv_o(const char **format, t_flags *flags, va_list *args)
 	int				numlen;
 	unsigned long	lnum;
 
+	numlen = 0;
 	ft_memset(str, 0, 64);
 	if (flags->lenmod[0] >= 106 || **format == 'O')
 	{
@@ -98,15 +99,15 @@ void		conv_o(const char **format, t_flags *flags, va_list *args)
 	}
 	else
 		lnum = (unsigned long)va_arg(*args, unsigned int);
-	numlen = count_num(lnum, (unsigned long)10);
+	numlen = base_conv(lnum, str, (long)8, numlen);
 	if (flags->altform)
 	{
 		lnum ? flags->precision = numlen + 1 :
 			(flags->precision = 1);
 		flags->preper = 1;
 	}
-	numlen = base_conv(lnum, str, (long)8, numlen);
 	if (flags->preper && !lnum)
 		numlen--;
+	flags->sign = 0;
 	conv_d_i_u_owrite(flags, str, numlen, 0);
 }

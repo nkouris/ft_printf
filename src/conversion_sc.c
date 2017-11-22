@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 18:05:24 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 13:33:00 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ static void	conv_ws(t_flags *flags, wchar_t *str)
 		i++;
 	ustr = (unsigned char *)ft_memalloc((unsigned int)i);
 	j = 0;
-	while (j > i)
+	while (j < i)
 	{
 		if (*str <= 255)
 			ustr[j++] = (unsigned char)(*str++);
+		else
+			j++;
 	}
 	if (flags->fieldwidth > 0 || flags->precision > 0)
 		pad = print_padding(flags, &i);
-	flags->n += write(1, ustr, i);
+	flags->n += buf_store(flags, i, (const char *)ustr, 0);
 	if (pad > 0)
 		flags->n += buf_store(flags, pad, 0, ' ');
 }
