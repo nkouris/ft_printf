@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/21 18:04:44 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 15:53:44 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			buf_store(t_flags *flags, int n,
 	{
 		flags->strinst++;
 		if (new == ft_memalloc(512 + flags->strx))
-			exit(-1);
+			exit(1);
 		re_assigned(flags, new);
 	}
 	return (i);

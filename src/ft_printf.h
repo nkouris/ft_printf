@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 13:25:38 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 15:53:14 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <limits.h>
 # include "libft.h"
 # include <wchar.h>
+# include <stdlib.h>
 
 # define BASE_FLAGS "0123456789abcdef"
 # define HUINT 4294967296

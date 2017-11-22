@@ -23,7 +23,7 @@ INC += inc/ft_memdel
 all: $(NAME)
 
 $(NAME): $(OBJINC) $(OBJSRC)
-	@ echo "Compiling ft_printf library..."
+	@ echo "Building ft_printf library..."
 	@ ar -rcs $(NAME) $(OBJSRC) $(OBJINC) 
 
 %.o: %.c
@@ -33,10 +33,11 @@ $(NAME): $(OBJINC) $(OBJSRC)
 clean:
 	@ /bin/rm -f $(OBJSRC)
 	@ /bin/rm -f $(OBJINC)
-	@ echo "Cleaning folders..."
+	@ echo "Cleaning folders of object files..."
 
 fclean: clean
 	@ /bin/rm -f $(NAME)
+	@ echo "Removing library file..."
 
 re: fclean all
 	@ echo "Library Remade"

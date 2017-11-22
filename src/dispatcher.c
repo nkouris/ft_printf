@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 15:02:43 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 15:53:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (!(flags.str = ft_memalloc(512)))
-			exit(-1);
+			exit(1);
 		clear_flags(&flags);
 		naive = format;
 		i = 0;
