@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 15:53:24 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 16:09:43 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,12 @@ int			ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (!(flags.str = ft_memalloc(512)))
-			exit(1);
+			return(-1);
 		clear_flags(&flags);
 		naive = format;
 		i = 0;
 		naive_write(&format, &i);
-		if (i)
-			flags.n += buf_store(&flags, i, naive, 0);
+		i ? (flags.n += buf_store(&flags, i, naive, 0)) : flags.n;
 		store_pre(&format, &flags);
 		parse_conv(&format, &flags, &args);
 		*format ? format++ : format;
