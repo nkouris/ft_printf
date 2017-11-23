@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 16:51:45 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 18:05:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	re_assigned(t_flags *flags, char *new)
 {
+	new = ft_strcpy(new, (const char *)flags->str);
 	free(flags->str);
-	flags->str = 0;
 	flags->str = new;
 }
 
@@ -29,22 +29,23 @@ int			buf_store(t_flags *flags, int n,
 	new = 0;
 	if (store)
 	{
-		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0)
-			flags->str[flags->strx++] = store[i++];
+		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
+			flags->str[flags->strx++] = *store++;
 	}
 	else if (pad)
 	{
-		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0
-				&& i++ >= 0)
+		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
 			flags->str[flags->strx++] = pad;
 	}
 	if (flags->strx == (512 * (flags->strinst + 1)))
 	{
 		flags->strinst++;
-		if (new == ft_memalloc(512 + flags->strx))
+		if (!(new = (char *)ft_memalloc(512 + flags->strx)))
 			return (flags->failure = 0);
 		re_assigned(flags, new);
 	}
+	if (n > 0)
+		buf_store(flags, n, store, pad);
 	return (i);
 }
 

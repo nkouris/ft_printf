@@ -19,6 +19,7 @@ INC += inc/ft_memset
 INC += inc/ft_strlen
 INC += inc/ft_memalloc
 INC += inc/ft_memdel
+INC += inc/ft_strcpy
 
 all: $(NAME)
 
