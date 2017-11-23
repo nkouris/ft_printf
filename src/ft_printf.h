@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 16:09:56 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 17:03:25 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct		s_flags
 	char			*str;
 	int				strx;
 	int				strinst;
+	unsigned int	failure : 1;
 }					t_flags;
 
 /*

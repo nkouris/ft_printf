@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 16:28:39 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 17:10:17 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,34 @@ static void	clear_flags(t_flags *flags)
 	flags->pre = 0;
 	flags->strx = 0;
 	flags->strinst = 0;
+	flags->failure = 1;
 }
 
-static void	naive_write(const char **format, int *i)
+static void	naive_write(const char **format, t_flags *flags)
 {
+	int 		i;
+	const char	*naive;
+
+	naive = (*format);
+	i = 0;
 	while (**format != '%' && **format)
 	{
 		(*format)++;
-		(*i)++;
+		i++;
 	}
+	if (i)
+		flags->n += buf_store(flags, i, naive, 0);
+}
+
+static int	kill_switch(t_flags *flags)
+{
+	if (!flags->failure)
+	{
+		flags->n = -1;
+		return (0);
+	}
+	else
+		return (1);
 }
 
 /*
@@ -77,9 +96,7 @@ static void	naive_write(const char **format, int *i)
 int			ft_printf(const char *format, ...)
 {
 	va_list			args;
-	const char		*naive;
 	t_flags			flags;
-	int				i;
 
 	flags.n = 0;
 	va_start(args, format);
@@ -88,12 +105,11 @@ int			ft_printf(const char *format, ...)
 		if (!(flags.str = ft_memalloc(512)))
 			return (-1);
 		clear_flags(&flags);
-		naive = format;
-		i = 0;
-		naive_write(&format, &i);
-		i ? (flags.n += buf_store(&flags, i, naive, 0)) : flags.n;
+		naive_write(&format, &flags);
 		store_pre(&format, &flags);
 		parse_conv(&format, &flags, &args);
+		if (!kill_switch(&flags))
+			break ;
 		*format ? format++ : format;
 		write(1, flags.str, (flags.strx * (flags.strinst + 1)));
 		ft_memdel((void **)(&(flags.str)));
