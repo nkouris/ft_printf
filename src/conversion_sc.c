@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 14:59:24 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/22 18:29:30 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		conv_c(t_flags *flags, va_list *args)
 		flags->strx++;
 		flags->n++;
 	}
-	flags->n += buf_store(flags, 1, 0, nchar);
+	flags->n += buf_store(flags, ((!nchar) ? (0) : (1)), 0, nchar);
 	if (pad > 0)
 		flags->n += buf_store(flags, pad, 0, ' ');
 }
