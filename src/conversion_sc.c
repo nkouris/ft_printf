@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 13:03:38 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 13:06:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void		conv_s(const char **format, t_flags *flags, va_list *args)
 		wstr = va_arg(*args, wchar_t *);
 	else
 		str = va_arg(*args, char *);
-	while (pad)
-		pad--;
 	if (!str && !wstr)
 		conv_s_null(flags);
 	else if (str)

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 17:45:05 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 13:15:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {
-	int	empty;
-
-	empty = 0;
 	if (**format == 's' || **format == 'S')
 		conv_s(format, flags, args);
 	else if (**format == 'p')
@@ -36,8 +33,6 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_c(flags, args);
 	else if (**format == 'n')
 		conv_n(flags, args);
-	else
-		(*format)--;
 }
 
 static void	clear_flags(t_flags *flags)
@@ -56,7 +51,7 @@ static void	clear_flags(t_flags *flags)
 	flags->pre = 0;
 	flags->strx = 0;
 	flags->strinst = 0;
-	flags->failure = 1;
+	flags->failure = 0;
 }
 
 static void	naive_write(const char **format, t_flags *flags)
@@ -75,24 +70,6 @@ static void	naive_write(const char **format, t_flags *flags)
 		flags->n += buf_store(flags, i, naive, 0);
 }
 
-static int	kill_switch(t_flags *flags)
-{
-	if (!flags->failure)
-	{
-		flags->n = -1;
-		return (0);
-	}
-	else
-		return (1);
-}
-
-/*
-** Store current amount of chars written and write
-** Store preproccess flags
-** Parse conversion and print
-** Move past conversion flag, unless at end of string
-*/
-
 int			ft_printf(const char *format, ...)
 {
 	va_list			args;
@@ -108,12 +85,12 @@ int			ft_printf(const char *format, ...)
 		naive_write(&format, &flags);
 		store_pre(&format, &flags);
 		parse_conv(&format, &flags, &args);
-		if (!kill_switch(&flags))
+		if (kill_switch(&flags))
 			break ;
 		*format ? format++ : format;
 		write(1, flags.str, (flags.strx * (flags.strinst + 1)));
 		ft_memdel((void **)(&(flags.str)));
 	}
 	va_end(args);
-	return (flags.n);
+	return (flags.failure ? -1 : flags.n);
 }

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 18:05:57 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 13:10:33 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,12 @@ int			buf_store(t_flags *flags, int n,
 	{
 		flags->strinst++;
 		if (!(new = (char *)ft_memalloc(512 + flags->strx)))
-			return (flags->failure = 0);
+			return (flags->failure = 1);
 		re_assigned(flags, new);
 	}
 	if (n > 0)
 		buf_store(flags, n, store, pad);
 	return (i);
-}
-
-char		*uchar_switch(wchar_t *wstr)
-{
-	wstr = 0;
-	return (0);
 }
 
 void		upper(char *str)
@@ -71,4 +65,15 @@ void		conv_n(t_flags *flags, va_list *args)
 
 	storage = va_arg(*args, unsigned int *);
 	*storage = flags->n;
+}
+
+int			kill_switch(t_flags *flags)
+{
+	if (flags->failure)
+	{
+		flags->n = -1;
+		return (1);
+	}
+	else
+		return (0);
 }

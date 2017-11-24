@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 17:03:25 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 13:14:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int					base_conv(unsigned long n, char *address,
 
 int					buf_store(t_flags *flags, int n, const char *store,
 								unsigned char pad);
-char				*uchar_switch(wchar_t *wstr);
 void				upper(char *str);
 void				conv_n(t_flags *flags, va_list *args);
+int					kill_switch(t_flags *flags);
 
 #endif
