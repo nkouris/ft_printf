@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 15:31:55 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 12:59:58 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void		conv_d_i(const char **format, t_flags *flags, va_list *args)
 		flags->fieldwidth = relen + 1;
 	if (flags->preper && !lnum)
 		relen--;
+	while (num)
+		num++;
 	conv_d_i_u_owrite(flags, str, relen, lnum);
 }
 
