@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 13:06:56 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 13:36:55 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void		conv_s(const char **format, t_flags *flags, va_list *args)
 		if (pad > 0)
 			flags->n += buf_store(flags, pad, 0, ' ');
 	}
-	else
-		conv_ws(flags, wstr);
+/*	else
+		conv_ws(flags, wstr);*/
 }
 
 void		conv_c(t_flags *flags, va_list *args)
