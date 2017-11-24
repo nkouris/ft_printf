@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 13:14:56 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 14:34:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void				conv_x(const char **format, t_flags *flags, va_list *args);
 ** Ulitobase
 */
 
-int					count_num_signed(long n, long base);
+int					count_num_signed(long long n, long base);
 int					count_num(unsigned long n, unsigned long base);
-int					base_conv_signed(long n, char *address, long base, int len);
+int					base_conv_signed(long long n, char *address, long base, int len);
 int					base_conv(unsigned long n, char *address,
 					unsigned long base, int len);
 

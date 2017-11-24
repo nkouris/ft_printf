@@ -6,13 +6,13 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:31:41 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 14:22:20 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 14:34:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		count_num_signed(long n, long base)
+int		count_num_signed(long long n, long base)
 {
 	int len;
 
@@ -42,7 +42,7 @@ int		count_num(unsigned long n, unsigned long base)
 	return (len);
 }
 
-int		base_conv_signed(long n, char *address, long base, int len)
+int		base_conv_signed(long long n, char *address, long base, int len)
 {
 	int relen;
 	int baselen;

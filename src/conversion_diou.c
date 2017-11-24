@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 14:23:48 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 14:34:36 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ void		conv_d_i(const char **format, t_flags *flags, va_list *args)
 	char	str[64];
 	int		num;
 	int		relen;
-	long	lnum;
+	long long	lnum;
 
 	ft_memset(str, 0, 64);
 	if (flags->lenmod[0] >= 106 || **format == 'D')
-		lnum = va_arg(*args, long);
+		lnum = va_arg(*args, long long);
 	else 
 	{
 		num = va_arg(*args, int);
-		lnum = (long)num;
+		lnum = (long long)num;
 	}
 	if (flags->lenmod[0] == 'h' && flags->lenmod[1] == 'h')
-		lnum = (long)(char)num;
+		lnum = (long long)(char)num;
 	else if (flags->lenmod[0] == 'h' && flags->lenmod[1] != 'h')
-		lnum = (long)(short)num;
+		lnum = (long long)(short)num;
 	relen = count_num_signed(lnum, 10);
 	base_conv_signed(lnum, str, 10, relen);
 	if (flags->spacepad && flags->fieldwidth < relen)
