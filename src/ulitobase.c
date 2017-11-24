@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:31:41 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/19 15:59:39 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 14:22:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int		base_conv_signed(long n, char *address, long base, int len)
 	relen = 0;
 	baselen = count_num_signed(n, base);
 	len != baselen ? len = baselen : len;
-	n < 0 ? n = n * -1 : n;
-	if (n == 0)
+	if (!n)
 	{
 		address[0] = '0';
 		relen++;
@@ -60,6 +59,7 @@ int		base_conv_signed(long n, char *address, long base, int len)
 		base_conv(MINLONG_SAFE, address, 10, 19);
 	else
 	{
+		n < 0 ? n = n * -1 : n;
 		while (n)
 		{
 			address[--len] = BASE_FLAGS[n % base];
