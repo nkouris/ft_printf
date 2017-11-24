@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 13:42:57 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 13:49:39 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			buf_store(t_flags *flags, int n,
 		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
 			flags->str[flags->strx++] = pad;
 	}
-/*	if (flags->strx == (512 * (flags->strinst + 1)))
+	if (flags->strx == (512 * (flags->strinst + 1)))
 	{
 		flags->strinst++;
 		if (!(new = (char *)ft_memalloc(512 + flags->strx)))
@@ -45,7 +45,7 @@ int			buf_store(t_flags *flags, int n,
 		re_assigned(flags, new);
 	}
 	if (n > 0)
-		buf_store(flags, n, store, pad);*/
+		buf_store(flags, n, store, pad);
 	return (i);
 }
 
