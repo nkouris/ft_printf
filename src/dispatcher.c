@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 22:01:23 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 22:13:24 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_flag(flags);
 	else if (**format == 'c' || **format == 'C')
 		conv_c(flags, args);
-/*	else if (**format == 'n')
-		conv_n(flags, args);*/
+	else if (**format == 'n')
+		conv_n(flags, args);
 	else
+	{
+		va_arg(*args, void *);
 		(*format)--;
+	}
 }
 
 static void	clear_flags(t_flags *flags)
