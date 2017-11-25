@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/22 13:33:23 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 17:18:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void		conv_p(t_flags *flags, va_list *args)
 {
 	char *pass;
 	char set;
+	int	test = 1;
 
+	while (test)
+		test++;
 	flags->lenmod[0] = 'l';
 	set = 'x';
 	pass = &set;
