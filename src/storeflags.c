@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 21:44:37 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 21:52:23 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ static void	store_pre1(const char **format, t_flags *flags, int *found)
 	if (**format == '0' ? flags->zpad = 1 : 0)
 		(*format)++ ? (*found)++ : *found;
 	if (**format == '-' ? flags->negwidth = 1 : 0)
+		(*format)++ ? (*found)++ : *found;
+	if (**format == '*' ? flags->star = 1 : 0)
+		(*format)++ ? (*found)++ : *found;
+	if (**format == '$' ? flags->dolla = 1 : 0)
+		(*format)++ ? (*found)++ : *found;
+	if (**format == 'L' ? flags->capl = 1 : 0)
+		(*format)++ ? (*found)++ : *found;
+	if (**format == ''' ? flags->apos = 1 : 0)
 		(*format)++ ? (*found)++ : *found;
 }
 
