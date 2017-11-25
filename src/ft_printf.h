@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 21:53:06 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 22:38:41 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct		s_flags
 	unsigned int	sign : 1;
 	unsigned int	printsign : 1;
 	unsigned int	ptox : 1;
-	unsigned int	star : 1;
 	unsigned int	dolla : 1;
 	unsigned int	capl : 1;
 	unsigned int	apos : 1;
@@ -57,7 +56,8 @@ int					ft_printf(const char *format, ...);
 ** Store Flags
 */
 
-void				store_pre(const char **format, t_flags *flags);
+void				store_pre(const char **format, t_flags *flags,
+					va_list *args);
 
 /*
 ** Print Flags

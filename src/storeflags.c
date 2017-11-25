@@ -6,13 +6,14 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 21:54:11 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 22:42:12 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	store_padp(const char **format, t_flags *flags, int *found)
+static void	store_padp(const char **format, t_flags *flags, int *found,
+		va_list *args)
 {
 	int i;
 	int num;
@@ -24,23 +25,32 @@ static void	store_padp(const char **format, t_flags *flags, int *found)
 		(*found)++;
 		flags->preper = 1;
 		(*format)++;
-		while (ft_isdigit(**format))
+		if (**format == '*')
 		{
-			num = *(*format)++ - '0';
-			i = (i * 10) + num;
-			flags->precision = i;
+			flags->precision = va_arg(*args, int);
+			(*format)++;
+		}
+		else
+		{
+			while (ft_isdigit(**format))
+			{
+				num = *(*format)++ - '0';
+				i = (i * 10) + num;
+				flags->precision = i;
+			}
 		}
 	}
 }
 
-static void	store_padw(const char **format, t_flags *flags, int *found)
+static void	store_padw(const char **format, t_flags *flags, int *found,
+		va_list *args)
 {
 	int	i;
 	int	num;
 
 	num = 0;
 	i = 0;
-	if (ft_isdigit(**format) && flags->fieldwidth < 0 && **format != '0')
+	if ((ft_isdigit(**format) && flags->fieldwidth < 0 && **format != '0'))
 	{
 		(*found)++;
 		while (ft_isdigit(**format))
@@ -50,7 +60,12 @@ static void	store_padw(const char **format, t_flags *flags, int *found)
 			flags->fieldwidth = i;
 		}
 	}
-	store_padp(format, flags, found);
+	else if (**format == '*')
+	{
+		flags->fieldwidth = va_arg(*args, int);
+		(*format)++;
+	}
+	store_padp(format, flags, found, args);
 }
 
 static void	store_pre1(const char **format, t_flags *flags, int *found)
@@ -65,8 +80,6 @@ static void	store_pre1(const char **format, t_flags *flags, int *found)
 		(*format)++ ? (*found)++ : *found;
 	if (**format == '-' ? flags->negwidth = 1 : 0)
 		(*format)++ ? (*found)++ : *found;
-	if (**format == '*' ? flags->star = 1 : 0)
-		(*format)++ ? (*found)++ : *found;
 	if (**format == '$' ? flags->dolla = 1 : 0)
 		(*format)++ ? (*found)++ : *found;
 	if (**format == 'L' ? flags->capl = 1 : 0)
@@ -75,7 +88,7 @@ static void	store_pre1(const char **format, t_flags *flags, int *found)
 		(*format)++ ? (*found)++ : *found;
 }
 
-void		store_pre(const char **format, t_flags *flags)
+void		store_pre(const char **format, t_flags *flags, va_list *args)
 {
 	int	i;
 	int	j;
@@ -92,7 +105,7 @@ void		store_pre(const char **format, t_flags *flags)
 			found++;
 		}
 		store_pre1(format, flags, &found);
-		store_padw(format, flags, &found);
+		store_padw(format, flags, &found, args);
 		while (((**format == 'l' || **format == 'j'
 				|| **format == 'z' || **format == 'h') && i < 2))
 			flags->lenmod[i++] = *(*format)++;

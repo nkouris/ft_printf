@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 22:13:24 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 22:38:17 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			ft_printf(const char *format, ...)
 			return (-1);
 		clear_flags(&flags);
 		naive_write(&format, &flags);
-		store_pre(&format, &flags);
+		store_pre(&format, &flags, &args);
 		parse_conv(&format, &flags, &args);
 		if (kill_switch(&flags))
 			break ;
