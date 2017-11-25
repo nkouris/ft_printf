@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 20:42:22 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 21:42:28 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ void		upper(char *str)
 
 void		conv_n(t_flags *flags, va_list *args)
 {
-	unsigned int *storage;
+	int *storage;
 
-	storage = va_arg(*args, unsigned int *);
-	*storage = flags->n;
+	storage = va_arg(*args, int *);
+	if (storage)
+		*storage = flags->n;
+	else
+		;
 }
 
 int			kill_switch(t_flags *flags)
