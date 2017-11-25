@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 19:25:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 21:44:37 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		store_pre(const char **format, t_flags *flags)
 		while (((**format == 'l' || **format == 'j'
 				|| **format == 'z' || **format == 'h') && i < 2))
 			flags->lenmod[i++] = *(*format)++;
-		if (!found && !(ft_isalpha(**format)))
+		if (!found && !(ft_isalpha(**format)) && **format)
 			(*format)++;
 	}
 }
