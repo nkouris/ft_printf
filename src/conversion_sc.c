@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 23:43:34 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/25 00:47:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	conv_ws(t_flags *flags, wchar_t *str)
 	buf_store(flags, i, (const char *)ustr, 0);
 	if (pad > 0)
 		buf_store(flags, pad, 0, ' ');
+	ft_memdel((void **)(&(ustr)));
 }
 
 void		conv_s(const char **format, t_flags *flags, va_list *args)
@@ -96,6 +97,7 @@ void		conv_c(t_flags *flags, va_list *args)
 	}
 	else
 		nchar = va_arg(*args, unsigned int);
+	nchar > 127 || !nchar ? flags->wc = 1 : flags->wc;
 	pad = print_padding(flags, &single);
 	if (!nchar)
 	{

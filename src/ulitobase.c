@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:31:41 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 14:34:53 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/25 00:06:19 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		base_conv_signed(long long n, char *address, long base, int len)
 		relen++;
 	}
 	if (n == LONG_MIN)
-		base_conv(MINLONG_SAFE, address, 10, 19);
+		relen = base_conv(MINLONG_SAFE, address, 10, 19);
 	else
 	{
 		n < 0 ? n = n * -1 : n;

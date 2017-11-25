@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 23:46:21 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/25 00:40:56 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_n(flags, args);
 	else
 	{
-		va_arg(*args, void *);
+		va_arg(*args, int);
 		(*format)--;
 	}
 }
@@ -58,6 +58,7 @@ static void	clear_flags(t_flags *flags)
 	flags->stri = 0;
 	flags->failure = 0;
 	flags->ptox = 0;
+	flags->wc = 0;
 }
 
 static void	naive_write(const char **format, t_flags *flags)
@@ -82,6 +83,7 @@ int			ft_printf(const char *format, ...)
 	t_flags			flags;
 
 	flags.n = 0;
+	flags.failure = 0;
 	va_start(args, format);
 	while (*format)
 	{
@@ -94,7 +96,9 @@ int			ft_printf(const char *format, ...)
 		if (kill_switch(&flags))
 			break ;
 		*format ? format++ : format;
-		flags.n += write(1, flags.str, flags.strx);
+		write(1, flags.str, flags.strx);
+		flags.n += flags.strx;
+		flags.wc ? flags.n -= 1 : flags.n;
 		ft_memdel((void **)(&(flags.str)));
 	}
 	va_end(args);
