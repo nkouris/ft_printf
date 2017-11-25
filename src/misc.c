@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 20:04:59 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 20:42:22 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ int			buf_store(t_flags *flags, int n,
 	new = 0;
 	if (store)
 	{
-		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
+		while (flags->strx <= (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
 			flags->str[flags->strx++] = *store++;
 	}
 	else if (pad)
 	{
-		while (flags->strx < (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
+		while (flags->strx <= (512 * (flags->strinst + 1)) && --n >= 0 && i++ >= 0)
 			flags->str[flags->strx++] = pad;
 	}
-	if (flags->strx == (512 * (flags->strinst + 1)))
+	if (flags->strx == (512 * (flags->strinst + 1) + 1))
 	{
 		flags->strinst++;
-		if (!(new = (char *)ft_memalloc(512 * (flags->strinst + 1))))
+		if (!(new = (char *)ft_memalloc(512 * (flags->strinst + 1) + 1)))
 			return (flags->failure = 1);
 		re_assigned(flags, new);
 	}

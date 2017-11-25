@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 20:02:45 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 20:48:41 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (*format)
 	{
-		if (!(flags.str = (char *)ft_memalloc(512)))
+		if (!(flags.str = (char *)ft_memalloc(512 + 1)))
 			return (-1);
 		clear_flags(&flags);
 		naive_write(&format, &flags);
@@ -91,7 +91,7 @@ int			ft_printf(const char *format, ...)
 		if (kill_switch(&flags))
 			break ;
 		*format ? format++ : format;
-		write(1, flags.str, ((512 * flags.strinst) + flags.strx));
+		write(1, flags.str, flags.strx);
 		ft_memdel((void **)(&(flags.str)));
 	}
 	va_end(args);
