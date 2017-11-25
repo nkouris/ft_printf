@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 16:26:21 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 17:00:20 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		conv_d_i(const char **format, t_flags *flags, va_list *args)
 
 	ft_memset(str, 0, 64);
 	num = 1;
-	if (flags->lenmod[0] >= 106 || **format == 'D')
+	if (/*flags->lenmod[0] >= 106 || */**format == 'D')
 		lnum = va_arg(*args, long long);
 	else 
 	{
