@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 13:49:55 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:43:34 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static void	conv_s_null(t_flags *flags)
 
 	empty = 0;
 	pad = print_padding(flags, &empty);
-	flags->n += buf_store(flags, 6, "(null)", 0);
+	buf_store(flags, 6, "(null)", 0);
 	if (pad > 0)
-		flags->n += buf_store(flags, pad, 0, ' ');
+		buf_store(flags, pad, 0, ' ');
 }
 
 static void	conv_ws(t_flags *flags, wchar_t *str)
@@ -46,9 +46,9 @@ static void	conv_ws(t_flags *flags, wchar_t *str)
 	}
 	if (flags->fieldwidth > 0 || flags->precision > 0)
 		pad = print_padding(flags, &i);
-	flags->n += buf_store(flags, i, (const char *)ustr, 0);
+	buf_store(flags, i, (const char *)ustr, 0);
 	if (pad > 0)
-		flags->n += buf_store(flags, pad, 0, ' ');
+		buf_store(flags, pad, 0, ' ');
 }
 
 void		conv_s(const char **format, t_flags *flags, va_list *args)
@@ -72,9 +72,9 @@ void		conv_s(const char **format, t_flags *flags, va_list *args)
 		strlen = ft_strlen((const char *)str);
 		if (flags->fieldwidth > 0 || flags->precision > 0)
 			pad = print_padding(flags, &strlen);
-		flags->n += buf_store(flags, strlen, str, 0);
+		buf_store(flags, strlen, str, 0);
 		if (pad > 0)
-			flags->n += buf_store(flags, pad, 0, ' ');
+			buf_store(flags, pad, 0, ' ');
 	}
 	else
 		conv_ws(flags, wstr);
@@ -102,9 +102,9 @@ void		conv_c(t_flags *flags, va_list *args)
 		flags->strx++;
 		flags->n++;
 	}
-	flags->n += buf_store(flags, ((!nchar) ? (0) : (1)), 0, nchar);
+	buf_store(flags, ((!nchar) ? (0) : (1)), 0, nchar);
 	if (pad > 0)
-		flags->n += buf_store(flags, pad, 0, ' ');
+		buf_store(flags, pad, 0, ' ');
 }
 
 void		conv_flag(t_flags *flags)
@@ -116,7 +116,7 @@ void		conv_flag(t_flags *flags)
 	flags->precision = 0;
 	flags->zpad && flags->negwidth ? flags->zpad = 0 : flags->zpad;
 	pad = print_padding_num(flags, 1, 0);
-	flags->n += buf_store(flags, 1, 0, '%');
+	buf_store(flags, 1, 0, '%');
 	if (pad > 0)
 	{
 		flags->negwidth = 0;

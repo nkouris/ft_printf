@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 22:38:17 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:46:21 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static void	clear_flags(t_flags *flags)
 	flags->lenmod[0] = 0;
 	flags->pre = 0;
 	flags->strx = 0;
-	flags->strinst = 0;
+	flags->stri = 0;
 	flags->failure = 0;
 	flags->ptox = 0;
 }
 
 static void	naive_write(const char **format, t_flags *flags)
 {
-	int 		i;
+	int			i;
 	const char	*naive;
 
 	naive = (*format);
@@ -73,7 +73,7 @@ static void	naive_write(const char **format, t_flags *flags)
 		i++;
 	}
 	if (i)
-		flags->n += buf_store(flags, i, naive, 0);
+		buf_store(flags, i, naive, 0);
 }
 
 int			ft_printf(const char *format, ...)
@@ -94,7 +94,7 @@ int			ft_printf(const char *format, ...)
 		if (kill_switch(&flags))
 			break ;
 		*format ? format++ : format;
-		write(1, flags.str, flags.strx);
+		flags.n += write(1, flags.str, flags.strx);
 		ft_memdel((void **)(&(flags.str)));
 	}
 	va_end(args);

@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 18:15:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:43:59 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void	conv_x_write(t_flags *flags, char *str, int relen, int numlen)
 	if (flags->altform)
 		numlen += 2;
 	if (flags->zpad && flags->altform)
-		flags->n += buf_store(flags, 2, flags->pre, 0);
+		buf_store(flags, 2, flags->pre, 0);
 	pad = print_padding_num(flags, numlen, 0);
 	if (!flags->zpad && flags->altform)
-		flags->n += buf_store(flags, 2, flags->pre, 0);
+		buf_store(flags, 2, flags->pre, 0);
 	flags->altform ? numlen -= 2 : numlen;
-	flags->n += buf_store(flags, numlen, str, 0);
+	buf_store(flags, numlen, str, 0);
 	flags->altform ? numlen += 2 : numlen;
 	if (pad > 0)
 	{
@@ -53,7 +53,7 @@ void		conv_x(const char **format, t_flags *flags, va_list *args)
 	unsigned long	num;
 	int				relen;
 	int				numlen;
-	
+
 	relen = 0;
 	ft_memset(str, 0, 64);
 	num = va_arg(*args, unsigned long);

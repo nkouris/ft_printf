@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:42:21 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 18:33:22 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:44:27 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			print_padding(t_flags *flags, int *strlen)
 		pad = flags->fieldwidth - *strlen;
 	if (!flags->negwidth && pad > 0)
 	{
-		flags->n += buf_store(flags, pad, 0, ' ');
+		buf_store(flags, pad, 0, ' ');
 		pad = 0;
 	}
 	return (pad);
@@ -37,11 +37,11 @@ int			print_padding(t_flags *flags, int *strlen)
 static void	print_prec_num(t_flags *flags, int p_pad, long lnum)
 {
 	if (lnum < 0)
-		flags->n += buf_store(flags, 1, 0, '-');
+		buf_store(flags, 1, 0, '-');
 	else if (lnum >= 0 && flags->sign)
-		flags->n += buf_store(flags, 1, 0, '+');
+		buf_store(flags, 1, 0, '+');
 	if ((!flags->negwidth && p_pad > 0) || flags->precision > 0)
-		flags->n += buf_store(flags, p_pad, 0, '0');
+		buf_store(flags, p_pad, 0, '0');
 }
 
 int			print_padding_num(t_flags *flags, int numlen, long lnum)
@@ -65,7 +65,7 @@ int			print_padding_num(t_flags *flags, int numlen, long lnum)
 	}
 	if ((!flags->negwidth) && pad > 0)
 	{
-		flags->n += buf_store(flags, pad, 0, ' ');
+		buf_store(flags, pad, 0, ' ');
 		pad = 0;
 	}
 	print_prec_num(flags, p_pad, lnum);

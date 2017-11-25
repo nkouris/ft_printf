@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 14:57:08 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 22:38:41 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:45:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ typedef struct		s_flags
 	int				fieldwidth;
 	int				precision;
 	int				n;
+	int				nloops;
 	char			lenmod[2];
 	char			*pre;
 	char			*str;
 	int				strx;
-	int				strinst;
+	int				stri;
 	unsigned int	failure : 1;
 }					t_flags;
 
@@ -97,7 +98,8 @@ void				conv_x(const char **format, t_flags *flags, va_list *args);
 
 int					count_num_signed(long long n, long base);
 int					count_num(unsigned long n, unsigned long base);
-int					base_conv_signed(long long n, char *address, long base, int len);
+int					base_conv_signed(long long n, char *address, long base,
+					int len);
 int					base_conv(unsigned long n, char *address,
 					unsigned long base, int len);
 
@@ -105,7 +107,7 @@ int					base_conv(unsigned long n, char *address,
 ** Misc
 */
 
-int					buf_store(t_flags *flags, int n, const char *store,
+void				buf_store(t_flags *flags, int n, const char *store,
 								unsigned char pad);
 void				upper(char *str);
 void				conv_n(t_flags *flags, va_list *args);

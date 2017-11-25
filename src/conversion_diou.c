@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:17:55 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 21:27:49 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:42:47 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	conv_d_i_u_owrite(t_flags *flags, char *str, int numlen, long lnum)
 	pad = print_padding_num(flags, numlen, lnum);
 	(((lnum < 0) || (flags->sign && lnum >= 0)) && numlen > 1) ? numlen-- :
 		numlen;
-	flags->n += buf_store(flags, numlen, (const char *)str, 0);
+	buf_store(flags, numlen, (const char *)str, 0);
 	if (pad > 0)
-		flags->n += buf_store(flags, pad, 0, ' ');
+		buf_store(flags, pad, 0, ' ');
 }
 
 void		conv_d_i(const char **format, t_flags *flags, va_list *args)
@@ -39,7 +39,7 @@ void		conv_d_i(const char **format, t_flags *flags, va_list *args)
 	ft_memset(str, 0, 64);
 	if (flags->lenmod[0] >= 106 || **format == 'D')
 		lnum = va_arg(*args, long long);
-	else 
+	else
 	{
 		num = va_arg(*args, int);
 		lnum = (long long)num;
@@ -50,9 +50,9 @@ void		conv_d_i(const char **format, t_flags *flags, va_list *args)
 		lnum = (long long)(short)num;
 	relen = base_conv_signed(lnum, str, 10, count_num_signed(lnum, 10));
 	if (flags->spacepad && lnum > 0)
-		flags->n += buf_store(flags, 1, 0, ' ');
+		buf_store(flags, 1, 0, ' ');
 	(flags->spacepad && lnum > 0) && flags->fieldwidth > relen ?
-		flags->fieldwidth -= 1 : flags->fieldwidth; 
+		flags->fieldwidth -= 1 : flags->fieldwidth;
 	(flags->preper && !lnum) ? relen -= 1 : relen;
 	flags->preper && flags->zpad ? flags->zpad = 0 : flags->zpad;
 	conv_d_i_u_owrite(flags, str, relen, lnum);
