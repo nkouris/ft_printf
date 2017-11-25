@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 19:46:19 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 20:02:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ int			ft_printf(const char *format, ...)
 		if (kill_switch(&flags))
 			break ;
 		*format ? format++ : format;
-		!flags.strinst ? flags.strinst = 1 : flags.strinst;
-		write(1, flags.str, (flags.strx * flags.strinst));
+		write(1, flags.str, ((512 * flags.strinst) + flags.strx));
 		ft_memdel((void **)(&(flags.str)));
 	}
 	va_end(args);
