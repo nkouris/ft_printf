@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:42:21 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 13:37:15 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 18:21:16 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int			print_padding(t_flags *flags, int *strlen)
 
 static void	print_prec_num(t_flags *flags, int p_pad, long lnum)
 {
+	int i = 1;
+	if (flags->precision > 0)
+	{
+		while (i)
+			i++;
+	}
 	if (lnum < 0)
 		flags->n += buf_store(flags, 1, 0, '-');
 	else if (lnum >= 0 && flags->sign)
