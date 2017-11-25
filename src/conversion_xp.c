@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 13:40:27 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 18:12:07 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 18:15:03 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ void		conv_x(const char **format, t_flags *flags, va_list *args)
 	int				relen;
 	int				numlen;
 	
-	int	test = 1;
-
-	if (!flags->ptox)
-	{
-		while (test)
-		test++;
-	}
-
 	relen = 0;
 	ft_memset(str, 0, 64);
 	num = va_arg(*args, unsigned long);
