@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 17:11:52 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 18:11:45 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	clear_flags(t_flags *flags)
 	flags->strx = 0;
 	flags->strinst = 0;
 	flags->failure = 0;
+	flags->ptox = 0;
 }
 
 static void	naive_write(const char **format, t_flags *flags)
