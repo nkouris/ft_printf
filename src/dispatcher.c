@@ -6,22 +6,11 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 15:04:31 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 18:32:03 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 19:09:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int parse_noimp(const char **format, t_flags *flags, va_list *args)
-{
-	if ((**format == 'e' || **format == 'E')
-		|| (**format == 'f' || **format == 'F')
-		|| (**format == 'g' || **format =='G')
-		|| (**format == 'a' || **format == 'A'))
-		return (1);
-	else
-		return (0);
-}
 
 static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 {
@@ -44,8 +33,6 @@ static void	parse_conv(const char **format, t_flags *flags, va_list *args)
 		conv_c(flags, args);
 	else if (**format == 'n')
 		conv_n(flags, args);
-	else if (parse_noimp(format, flags, args))
-		;
 	else
 		(*format)--;
 }
