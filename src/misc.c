@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:54:39 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 23:46:46 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 23:53:09 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ void		conv_n(t_flags *flags, va_list *args)
 
 	storage = va_arg(*args, int *);
 	if (storage)
+	{
+		flags->n += flags->strx;
 		*storage = flags->n;
+		flags->n -= flags->strx;
+	}
 	else
 		;
 }
