@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 14:25:09 by nkouris           #+#    #+#             */
-/*   Updated: 2017/11/24 19:09:04 by nkouris          ###   ########.fr       */
+/*   Updated: 2017/11/24 19:13:26 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ void		store_pre(const char **format, t_flags *flags)
 		if (**format == '%' && j < 1)
 			(*format)++ ? j++ : j;
 		else if (**format == '%')
+		{
 			j++;
+			found++;
+		}
 		store_pre1(format, flags, &found);
 		store_padw(format, flags, &found);
 		while (((**format == 'l' || **format == 'j'
